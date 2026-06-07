@@ -1,6 +1,11 @@
 <resources>
-    <string name="app_name">PetsRcv</string>
+    <string name="app_name">Petagram</string>
 
     <string name="content_pet_image">Pet image</string>
     <string name="content_icon_bone">Rating icon</string>
+
+    <string name="menu_favorites">Favorites</string>
+    <string name="menu_others">Others</string>
+
+    <string name="content_desc_fab">floating button up</string>
 </resources>
