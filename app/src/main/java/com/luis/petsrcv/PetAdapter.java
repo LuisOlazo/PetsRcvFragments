@@ -10,26 +10,32 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ViewHolder> {
     private List<PetModel> list;
+    private Consumer<PetModel> onFavorite;
 
     public void setList(List<PetModel> list) {
         this.list = list;
+    }
+
+    public void setOnFavorite(Consumer<PetModel> onFavorite) {
+        this.onFavorite = onFavorite;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_pet, parent,false);
+        View view = layoutInflater.inflate(R.layout.item_pet, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PetModel item = list.get(position);
-        holder.configViews(item);
+        holder.configViews(item,onFavorite);
     }
 
     @Override
@@ -38,20 +44,25 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView petImage;
+        private final ImageView petImage, imvFavorite;
         private final TextView petName, petRating;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             petImage = itemView.findViewById(R.id.imvPetImage);
+            imvFavorite = itemView.findViewById(R.id.imvBone1);
             petName = itemView.findViewById(R.id.tvPetName);
             petRating = itemView.findViewById(R.id.tvPetRating);
         }
 
-        private void configViews(PetModel model) {
+        private void configViews(PetModel model, Consumer<PetModel> consumer) {
             petImage.setImageResource(model.getImageResId());
             petName.setText(model.getName());
             petRating.setText(String.valueOf(model.getRating()));
+            imvFavorite.setOnClickListener(view -> {
+                int position = getAbsoluteAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) consumer.accept(model);
+            });
         }
 
     }
