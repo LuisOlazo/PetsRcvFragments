@@ -3,6 +3,7 @@
 
     <string name="content_pet_image">Pet image</string>
     <string name="content_icon_bone">Rating icon</string>
+    <string name="content_profile_photo">Profile photo</string>
 
     <string name="label_names">Names</string>
     <string name="label_email">Email</string>
