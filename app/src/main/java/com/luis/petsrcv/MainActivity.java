@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -88,14 +89,15 @@ public class MainActivity extends AppCompatActivity {
             String names = Objects.requireNonNull(tilNames.getEditText()).getText().toString();
             String email = Objects.requireNonNull(tilEmail.getEditText()).getText().toString();
             String messages = Objects.requireNonNull(tilMessage.getEditText()).getText().toString();
-            EmailSender.sendEmail(names, email, messages);
+            EmailSender.sendEmail(names, email, messages,
+                    exception -> Toast.makeText(getBaseContext(), getString(R.string.msg_error_mail), Toast.LENGTH_SHORT).show());
             dialog.dismiss();
         });
 
         dialog.show();
     }
 
-    private void showOptionAbout(){
+    private void showOptionAbout() {
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialogView = inflater.inflate(R.layout.dialog_about, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

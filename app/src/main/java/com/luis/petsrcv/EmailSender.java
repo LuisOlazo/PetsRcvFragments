@@ -1,10 +1,10 @@
 package com.luis.petsrcv;
 
 import java.util.Properties;
+import java.util.function.Consumer;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -15,7 +15,7 @@ public class EmailSender {
     private static final String EMAIL_FROM = "your_email@gmail.com";//Using Gmail
     private static final String PASSWORD = "your_application_password";//Manage application password
 
-    public static void sendEmail(String name,String email ,String messages) {
+    public static void sendEmail(String name, String email , String messages, Consumer<Exception> onFailure) {
         new Thread(() -> {
             try {
                 //SMTP server properties
@@ -50,8 +50,8 @@ public class EmailSender {
                 // Send Email
                 Transport.send(message);
 
-            } catch (MessagingException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                onFailure.accept(e);
             }
         }).start();
     }
