@@ -19,6 +19,7 @@
     <string name="author">Author</string>
 
     <string name="msg_error_mail">Email could not be accessed, please check settings</string>
+    <string name="msg_favorites">The rating function is only allowed in the main view</string>
 
 
     <string name="info_author_name">Luis Olazo</string>

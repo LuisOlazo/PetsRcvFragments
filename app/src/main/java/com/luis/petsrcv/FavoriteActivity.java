@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -38,6 +39,8 @@ public class FavoriteActivity extends AppCompatActivity {
         RecyclerView petRcv = findViewById(R.id.rcvFavoritePets);
         PetAdapter adapter = new PetAdapter();
         adapter.setList(dataset.getFavoritePets());
+        adapter.setOnFavorite(p ->
+                Toast.makeText(this, getString(R.string.msg_favorites), Toast.LENGTH_SHORT).show());
         petRcv.setAdapter(adapter);
     }
 

@@ -1,17 +1,15 @@
 package com.luis.petsrcv;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PetDataset {
-
-
     private static PetDataset instance;
-    private List<PetModel> favoritePets;
-    private List<PetModel> allPets;
+    private final List<PetModel> allPets;
 
     private PetDataset() {
-        favoritePets = new ArrayList<>();
         allPets = new ArrayList<>();
         loadPets();
     }
@@ -40,12 +38,30 @@ public class PetDataset {
     }
 
     public List<PetModel> getFavoritePets() {
-        return new ArrayList<>(favoritePets);
+        //get five most voted pets
+        return allPets.stream()
+                .sorted(Comparator.comparingInt(PetModel::getRating).reversed())
+                .limit(5)
+                .collect(Collectors.toList());
+    }
+
+    public List<PetModel> profilePet() {
+        List<PetModel> list = new ArrayList<>();
+        list.add(new PetModel(1, R.drawable.pet4, "Coco", 3));
+        list.add(new PetModel(2, R.drawable.pet4, "Coco", 4));
+        list.add(new PetModel(3, R.drawable.pet4, "Coco", 5));
+        list.add(new PetModel(4, R.drawable.pet4, "Coco", 2));
+        list.add(new PetModel(5, R.drawable.pet4, "Coco", 1));
+        list.add(new PetModel(6, R.drawable.pet4, "Coco", 3));
+        list.add(new PetModel(7, R.drawable.pet4, "Coco", 1));
+        list.add(new PetModel(8, R.drawable.pet4, "Coco", 7));
+        list.add(new PetModel(9, R.drawable.pet4, "Coco", 2));
+        return list;
     }
 
     public void addToFavorites(PetModel pet) {
-        if (!favoritePets.contains(pet)) favoritePets.add(pet);
-        else favoritePets.remove(pet);
+        int rating = pet.getRating() + 1;
+        pet.setRating(rating);
     }
 
 }
